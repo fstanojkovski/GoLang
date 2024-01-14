@@ -1,0 +1,52 @@
+const ARC_BETA_API = "https://api.retool.com/v1/workflows/629ac40b-46c2-4cb5-8d16-ee9d482781e0/startTrigger?workflowApiKey=retool_wk_ad878a1e91ad47c3bd1f754c426da0cf"
+ 
+// Requests
+const betaTesters = await fetch({ url: ARC_BETA_API })
+const background = new Request("https://cdn.discordapp.com/attachments/457621743243231234/1196184170456686702/hwerthwethwth.png?ex=65b6b452&is=65a43f52&hm=549b3ce20e106d352a5eab4cbdd2da81482c3839a9798375195e7328dd66bf5b&")
+const backgroundImage = await background.loadImage()
+ 
+// Widget
+const widget = new ListWidget()
+widget.backgroundImage = backgroundImage
+widget.useDefaultPadding()
+ 
+const betaTestersNum = await betaTesters["betaTesters"]
+ 
+const betaTestersText = widget.addText(String(await betaTestersNum))
+betaTestersText.textColor = Color.white()
+betaTestersText.font = new Font("Avenir-Black", 35)
+betaTestersText.textOpacity = 0.95
+betaTestersText.shadowColor = Color.white()
+betaTestersText.shadowRadius = 12.5
+betaTestersText.centerAlignText()
+ 
+const onboardedText = widget.addText("Beta Testers")
+onboardedText.textColor = Color.white()
+onboardedText.font = new Font("Avenir-Black", 18)
+onboardedText.textOpacity = 0.95
+onboardedText.shadowColor = Color.white()
+onboardedText.shadowRadius = 10
+onboardedText.centerAlignText()
+ 
+const dateText = widget.addText("Since Dec 11, 2023")
+dateText.textColor = Color.white()
+dateText.font = new Font("Avenir-Black", 12)
+dateText.textOpacity = 0.6
+dateText.shadowColor = Color.white()
+dateText.shadowRadius = 10
+dateText.centerAlignText()
+ 
+widget.presentSmall()
+Script.setWidget(widget)
+Script.complete()
+ 
+// Utilities
+async function fetch(opts) {
+    const request = new Request(opts.url)
+    request.headers = {
+        ...opts.headers,
+        ...this.defaultHeaders
+    }
+    const result = await request.loadJSON()
+    return result
+}
